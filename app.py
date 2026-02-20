@@ -356,7 +356,7 @@ if uploaded_file:
         pdf.cell(90, 8, "Export évité (kWh/an)"); pdf.cell(30, 8, f"{export_avoided:.2f}", ln=True)
         pdf.cell(90, 8, "Cycles équivalents/an"); pdf.cell(30, 8, f"{eq_cycles:.2f}", ln=True)
         pdf.cell(90, 8, "Gain net (CHF/an)"); pdf.cell(30, 8, f"{gain_net:.2f}", ln=True)
-        pdf.ln(5)
+        pdf.ln(30)
     
         # SOC Graphique matplotlib en mémoire
         img_buf = BytesIO()
