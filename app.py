@@ -38,25 +38,15 @@ uploaded_file = st.file_uploader(
 if uploaded_file:
     file_type = uploaded_file.name.split('.')[-1].lower()
     
+    # Lecture CSV ou Excel
     if file_type == "csv":
-        # Lire le CSV (avec détection automatique du séparateur)
-        # Pour CSV avec ; comme séparateur
-        df_full = pd.read_csv(uploaded_file, header=0, sep=';', engine='python')
-        
-        # Convertir en Excel en mémoire
-        excel_buffer = BytesIO()
-        with pd.ExcelWriter(excel_buffer, engine='xlsxwriter') as writer:
-            df_full.to_excel(writer, index=False, header=False)  # pas de header initial
-        excel_buffer.seek(0)
-        
-        # On remplace uploaded_file par le buffer Excel pour la suite du code
-        uploaded_file = excel_buffer
-        file_type = "xlsx"
-    
-    if file_type in ["xlsx", "xls"]:
-        df_full = pd.read_excel(uploaded_file, header=None)
+        df = pd.read_csv(uploaded_file, header=0, sep=';', engine='python')  # première ligne comme header
+    else:
+        df = pd.read_excel(uploaded_file, header=0)
 
-    st.write(df_full.head(10))
+    # Afficher aperçu
+    st.write("Aperçu des 5 premières lignes du fichier :")
+    st.dataframe(df.head())
 
     date_tokens = ["date", "datetime", "horodatage", "timestamp", "date/heure", "date heure"]
     import_tokens = ["soutirage", "import", "achat", "reseau", "consommation"]
