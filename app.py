@@ -193,30 +193,82 @@ if uploaded_file:
     ax.legend()
     st.pyplot(fig)
 
+    # Nettoyage des données
+    df = df.sort_values(by=date_col)
+    
+    df["import_kWh"] = df["import_kWh"].clip(lower=0).fillna(0)
+    df["export_kWh"] = df["export_kWh"].clip(lower=0).fillna(0)
+    
+    imp_after = pd.Series(imp_after).clip(lower=0).fillna(0)
+    exp_after = pd.Series(exp_after).clip(lower=0).fillna(0)
+    
     # ==========================================================
     # GRAPHIQUE Import / Export AVANT
     # ==========================================================
     st.header("📊 Import / Export AVANT (visualisation claire)")
+    
     fig_before, ax_before = plt.subplots(figsize=(10,4))
-    ax_before.fill_between(df[date_col], 0, df["import_kWh"], color="blue", alpha=0.5, label="Import (kWh)")
-    ax_before.fill_between(df[date_col], 0, df["export_kWh"], color="orange", alpha=0.5, label="Export (kWh)")
+    
+    ax_before.fill_between(
+        df[date_col],
+        df["import_kWh"],
+        0,
+        where=df["import_kWh"] > 0,
+        alpha=0.5,
+        label="Import (kWh)"
+    )
+    
+    ax_before.fill_between(
+        df[date_col],
+        df["export_kWh"],
+        0,
+        where=df["export_kWh"] > 0,
+        alpha=0.5,
+        label="Export (kWh)"
+    )
+    
+    ax_before.set_ylim(bottom=0)  # 🔥 Empêche l'axe de descendre sous 0
     ax_before.set_xlabel("Date")
     ax_before.set_ylabel("Énergie (kWh)")
     ax_before.set_title("Import / Export AVANT optimisation")
     ax_before.legend()
+    ax_before.grid(True, alpha=0.3)
+    
     st.pyplot(fig_before)
-
+    
+    
     # ==========================================================
     # GRAPHIQUE Import / Export APRES
     # ==========================================================
     st.header("📊 Import / Export APRÈS (visualisation claire)")
+    
     fig_after, ax_after = plt.subplots(figsize=(10,4))
-    ax_after.fill_between(df[date_col], 0, imp_after, color="blue", alpha=0.5, label="Import après (kWh)")
-    ax_after.fill_between(df[date_col], 0, exp_after, color="orange", alpha=0.5, label="Export après (kWh)")
+    
+    ax_after.fill_between(
+        df[date_col],
+        imp_after,
+        0,
+        where=imp_after > 0,
+        alpha=0.5,
+        label="Import après (kWh)"
+    )
+    
+    ax_after.fill_between(
+        df[date_col],
+        exp_after,
+        0,
+        where=exp_after > 0,
+        alpha=0.5,
+        label="Export après (kWh)"
+    )
+    
+    ax_after.set_ylim(bottom=0)  # 🔥 Très important
     ax_after.set_xlabel("Date")
     ax_after.set_ylabel("Énergie (kWh)")
     ax_after.set_title("Import / Export APRÈS optimisation")
     ax_after.legend()
+    ax_after.grid(True, alpha=0.3)
+    
     st.pyplot(fig_after)
 
 
