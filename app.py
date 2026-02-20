@@ -46,7 +46,7 @@ if uploaded_file:
 
     # Afficher aperçu
     st.write("Aperçu des 5 premières lignes du fichier :")
-    st.dataframe(df.head())
+    st.dataframe(df_full.head())
 
     date_tokens = ["date", "datetime", "horodatage", "timestamp", "date/heure", "date heure"]
     import_tokens = ["soutirage", "import", "achat", "reseau", "consommation"]
