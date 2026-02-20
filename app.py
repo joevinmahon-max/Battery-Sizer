@@ -188,7 +188,10 @@ if uploaded_file:
                 from fpdf import FPDF
                 import plotly.io as pio
 
-                fig2.write_image("soc_plot.png")
+                try:
+                    fig2.write_image("soc_plot.png")
+                except Exception as e:
+                    st.warning(f"Impossible de créer le PNG: {e}")
                 pdf = FPDF()
                 pdf.add_page()
                 pdf.set_font("Arial", 'B', 16)
