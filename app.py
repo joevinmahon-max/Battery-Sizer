@@ -49,7 +49,7 @@ if uploaded_file:
 
     date_tokens = ["date", "datetime", "horodatage", "timestamp", "date/heure", "date heure"]
     import_tokens = ["soutirage", "import", "achat", "reseau", "consommation"]
-    export_tokens = ["surplus", "surplus solaire", "export", "injection", "reinjection", "réinjection"]
+    export_tokens = ["surplus", "surplus solaire", "export", "excedent", "reinjection", "réinjection"]
 
     def find_header_row(df, max_rows=120):
         for r in range(max_rows):
