@@ -93,17 +93,12 @@ if uploaded_file:
     else:
         st.success(f"Colonnes détectées : date={date_col}, import={imp_col}, export={exp_col}")
 
-    # ==========================================================
-    # Conversion de la colonne date en datetime (gestion timezone)
-    # ==========================================================
+    # Conversion en datetime, gestion automatique du timezone
     try:
-        # pandas détecte automatiquement le timezone
-        df[date_col] = pd.to_datetime(df[date_col], utc=True)  # convertit en UTC
-        # Si tu veux travailler sans timezone, convertir en naive
-        df[date_col] = df[date_col].dt.tz_localize(None)
+        df[date_col] = pd.to_datetime(df[date_col], errors='coerce', utc=True)  # convertit les dates, NaN si erreur
+        df[date_col] = df[date_col].dt.tz_convert(None)  # supprime timezone
     except Exception as e:
-        st.error(f"Erreur lors de la conversion de la colonne date en datetime : {e}")
-        st.stop()
+        st.warning(f"Attention : certaines dates n'ont pas pu être converties correctement : {e}")
         
         with st.spinner("Conversion des données en kWh…"):
             df[imp_col] = pd.to_numeric(df[imp_col], errors='coerce').fillna(0)
