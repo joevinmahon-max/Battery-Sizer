@@ -97,7 +97,10 @@ if uploaded_file:
     # Conversion de la colonne date en datetime (gestion timezone)
     # ==========================================================
     try:
-        df[date_col] = pd.to_datetime(df[date_col], utc=True).dt.tz_convert(None)
+        # pandas détecte automatiquement le timezone
+        df[date_col] = pd.to_datetime(df[date_col], utc=True)  # convertit en UTC
+        # Si tu veux travailler sans timezone, convertir en naive
+        df[date_col] = df[date_col].dt.tz_localize(None)
     except Exception as e:
         st.error(f"Erreur lors de la conversion de la colonne date en datetime : {e}")
         st.stop()
