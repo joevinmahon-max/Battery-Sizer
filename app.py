@@ -184,8 +184,9 @@ if uploaded_file:
             # ==========================================================
             # PDF FINAL
             # ==========================================================
+
+            from fpdf import FPDF
             with st.spinner("Génération du PDF…"):
-               from fpdf import FPDF
                 # Crée le PDF
                 pdf = FPDF()
                 pdf.add_page()
