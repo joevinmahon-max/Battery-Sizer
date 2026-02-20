@@ -41,7 +41,7 @@ if uploaded_file:
     if file_type == "csv":
         # Lire le CSV (avec détection automatique du séparateur)
         # Pour CSV avec ; comme séparateur
-        df = pd.read_csv(uploaded_file, header=0, sep=';', engine='python')
+        df_full = pd.read_csv(uploaded_file, header=0, sep=';', engine='python')
         
         # Convertir en Excel en mémoire
         excel_buffer = BytesIO()
