@@ -211,15 +211,18 @@ if uploaded_file:
     # ==========================================================
     # CHOIX AGRÉGATION
     # ==========================================================
-    
-    freq = st.selectbox(
+    aggregation_choice = st.selectbox(
         "📅 Niveau d'agrégation",
-        {
-            "Journalier": "D",
-            "Hebdomadaire": "W",
-            "Mensuel": "M"
-        }
+        ["Journalier", "Hebdomadaire", "Mensuel"]
     )
+    
+    freq_map = {
+        "Journalier": "D",
+        "Hebdomadaire": "W",
+        "Mensuel": "M"
+    }
+    
+    freq = freq_map[aggregation_choice]
     
     # ==========================================================
     # AGRÉGATION
