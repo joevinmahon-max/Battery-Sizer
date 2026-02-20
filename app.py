@@ -287,7 +287,12 @@ if uploaded_file:
     
     # Téléchargement depuis Streamlit
     with open(pdf_file, "rb") as f:
-        st.download_button("Télécharger PDF final", f, file_name="bilan_batterie.pdf", mime="application/pdf")
+        st.download_button(
+            "Télécharger PDF final",
+            f,
+            file_name="bilan_batterie.pdf",
+            mime="application/pdf"
+        )
 
     # ==========================================================
     # SUMMARY
