@@ -113,6 +113,8 @@ if uploaded_file:
 
     st.sidebar.markdown(f"### Capacité max dynamique: **{cap_max_dyn} kWh**")
 
+    with st.spinner("Simulation en cours - DYNAMIC CAP FROM DAILY EXPORT"):
+
     # ==========================================================
     # QUICK SIM FUNCTION
     # ==========================================================
@@ -152,6 +154,8 @@ if uploaded_file:
 
         return gain, imp_after, exp_after, eq_cycles
 
+        with st.spinner("Simulation en cours - QUICK SIM FUNCTION"):
+
     # ==========================================================
     # GRID SEARCH
     # ==========================================================
@@ -175,6 +179,8 @@ if uploaded_file:
     st.success(f"🔋 Batterie optimale : {best.Cap_kWh} kWh / {best.Power_kW} kW")
     st.write(f"Gain annuel: {round(best.Gain_CHF,2)} CHF")
 
+    with st.spinner("Simulation en cours - GRID SEARCH"):
+
     # ==========================================================
     # GRAPH 1 – Gain surface
     # ==========================================================
@@ -189,6 +195,8 @@ if uploaded_file:
 
     fig.update_layout(title="Surface Gain CHF")
     st.plotly_chart(fig, use_container_width=True)
+
+    with st.spinner("Simulation en cours - GRAPH 1 – Gain surface"):
 
     # ==========================================================
     # DETAILED SIM BEST
@@ -216,6 +224,8 @@ if uploaded_file:
     fig2.add_trace(go.Scatter(x=df[date_col], y=df["SOC"], name="SoC"))
     fig2.update_layout(title="État de charge batterie")
     st.plotly_chart(fig2, use_container_width=True)
+
+    with st.spinner("Simulation en cours - DETAILED SIM BEST"):
 
     # ==========================================================
     # GENERATION PDF FINAL
@@ -293,6 +303,8 @@ if uploaded_file:
             file_name="bilan_batterie.pdf",
             mime="application/pdf"
         )
+
+    with st.spinner("Simulation en cours - CREATE PDF"):
 
     # ==========================================================
     # SUMMARY
