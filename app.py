@@ -199,8 +199,8 @@ if uploaded_file:
     soc_list=[]
 
     for i,row in df.iterrows():
-        imp=row["import_kwh"]
-        exp=row["export_kwh"]
+        imp=row["import_kWh"]
+        exp=row["export_kWh"]
 
         charge=min(exp,best.Power_kW*dt_hours,max(best.Cap_kWh-soc,0))
         soc+=charge*eta
